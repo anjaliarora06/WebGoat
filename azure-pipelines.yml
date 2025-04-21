@@ -12,6 +12,11 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x86'
+    jdkSourceOption: 'PreInstalled'
 - task: NexusIqPipelineTask@0
   inputs:
     nexusIqService: 'Sonatype IQ Server'
