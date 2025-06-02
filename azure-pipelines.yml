@@ -18,11 +18,32 @@ steps:
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 - task: SonatypeEvaluate@0
+  name: sonatypePolicyEvaluation
   inputs:
     cliVersion: '2.1.1'
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'sandbox-application'
     stage: 'Build'
+    scanTargets: '**/pom.xml'
+    acceptIqServerSelfSignedCertificates: true
+
+- task: SonatypeFetchSbom@0
+  name: sonatypeFetchSbomTask
+  displayName: 'Sonatype IQ Fetch SBOM'
+  inputs:
+    nexusIqService: 'Sonatype IQ Server'
+    applicationId: 'sandbox-application'
+    scanId: 'sonatypePolicyEvaluation.scanId'
+    sbomStandard: 'cyclonedx'
+    sbomVersion: '1.6'
+    acceptIqServerSelfSignedCertificates: true
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'sbom.zip'
+    publishLocation: 'pipeline'
+    
 - task: NexusIqPipelineTask@0
   inputs:
     nexusIqService: 'Sonatype IQ Server'
