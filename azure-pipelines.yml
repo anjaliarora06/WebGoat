@@ -21,7 +21,7 @@ steps:
   name: sonatypePolicyEvaluation
   inputs:
     nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'aa-1'
+    applicationId: 'sandbox-application'
     stage: 'Build'
 
 - task: SonatypeFetchSbom@0
