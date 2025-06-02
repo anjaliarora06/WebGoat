@@ -18,7 +18,6 @@ steps:
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 - task: SonatypeEvaluate@0
-  name: sonatypePolicyEvaluation
   inputs:
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'sandbox-application'
