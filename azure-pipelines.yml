@@ -32,8 +32,8 @@ steps:
   displayName: 'Sonatype IQ Fetch SBOM'
   inputs:
     nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'sandbox-application'
-    scanId: 'sonatypePolicyEvaluation.scanId'
+    applicationId: 'aa-1'
+    scanId: '7cbc716c02dc49baafb446725ef53e88'
     sbomStandard: 'cyclonedx'
     sbomVersion: '1.6'
     acceptIqServerSelfSignedCertificates: true
