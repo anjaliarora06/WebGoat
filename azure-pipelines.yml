@@ -22,7 +22,7 @@ steps:
   inputs:
     cliVersion: '2.3.0-02'
     nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'sandbox-application'
+    applicationId: 'aa-1'
     stage: 'Build'
     scanTargets: '**/pom.xml'
     acceptIqServerSelfSignedCertificates: true
@@ -37,16 +37,7 @@ steps:
     sbomStandard: 'cyclonedx'
     sbomVersion: '1.6'
     acceptIqServerSelfSignedCertificates: true
-- task: SonatypeFetchSbom@0
-  name: sonatypeFetchSbomTaskSpdx
-  displayName: 'Sonatype IQ Fetch SBOM'
-  inputs:
-    nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'aa-1'
-    scanId: '7cbc716c02dc49baafb446725ef53e88'
-    sbomStandard: 'spdx'
-    sbomVersion: '1.6'
-    acceptIqServerSelfSignedCertificates: true
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
