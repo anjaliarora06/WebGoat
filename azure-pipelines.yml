@@ -23,6 +23,7 @@ steps:
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'sandbox-application'
     stage: 'Build'
+    acceptIqServerSelfSignedCertificates: true
 
 - task: SonatypeFetchSbom@0
   name: sonatypeFetchSbomTask
