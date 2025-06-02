@@ -20,6 +20,7 @@ steps:
 - task: SonatypeEvaluate@0
   name: sonatypePolicyEvaluation
   inputs:
+    cliVersion: '2.3.0-02'
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'sandbox-application'
     stage: 'Build'
