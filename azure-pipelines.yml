@@ -23,8 +23,6 @@ steps:
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'aa-1'
     stage: 'Build'
-    scanTargets: '**/pom.xml'
-    acceptIqServerSelfSignedCertificates: true
 
 - task: SonatypeFetchSbom@0
   name: sonatypeFetchSbomTask
