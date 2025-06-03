@@ -18,8 +18,9 @@ steps:
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 - task: SonatypeEvaluate@0
+  name: sonatypeEvaluateTask
   inputs:
-    cliVersion: 'latest'
+    cliVersion: '2.2.0'
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'sandbox-application'
     stage: 'Build'
