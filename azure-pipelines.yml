@@ -35,17 +35,21 @@ steps:
     sbomVersion: '1.6'
     acceptIqServerSelfSignedCertificates: true
 
+- task: SonatypeFetchSbom@0
+  inputs:
+    nexusIqService: 'Sonatype IQ Server'
+    applicationId: 'aa-1'
+    scanId: '7cbc716c02dc49baafb446725ef53e88'
+    sbomStandard: 'spdx'
+    sbomFormat: 'xml'
+    acceptIqServerSelfSignedCertificates: true
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
     artifact: 'sbom.zip'
     publishLocation: 'pipeline'
     
-- task: NexusIqPipelineTask@0
-  inputs:
-    nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'aa-1'
-    stage: 'Build'
+
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
