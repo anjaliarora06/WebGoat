@@ -10,14 +10,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- task: JavaToolInstaller@1
+- task: Maven@4
   inputs:
-    versionSpec: '17'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+    azureSubscription: 'Sonatype Azure(48a33158-a8cc-4938-84fd-e661939ed499)'
+    mavenPomFile: 'pom.xml'
+    goals: 'package -Pdist'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    mavenVersionOption: 'Default'
+    mavenOptions: '-Xmx3072m'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 
 - task: NexusIqPipelineTask@0
   name: sonatypePolicyEvaluation
@@ -25,55 +31,12 @@ steps:
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'aa-1'
     stage: 'Build'
-    acceptIqServerSelfSignedCertificates: true
+    scanTargets: '**/target/*.jar, **/target/*.zip'
+    sarifFile: 'result.sarif'
 
-- task: Maven@4
-  inputs:
-    azureSubscription: 'Sonatype Azure(48a33158-a8cc-4938-84fd-e661939ed499)'
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    testRunTitle: 'sarif-file'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17'
-    jdkArchitectureOption: 'x64'
-    goals: 'package'
-
-
-- task: SonatypeFetchSbom@0
-  name: sonatypeFetchSbomTask
-  displayName: 'Sonatype IQ Fetch SBOM'
-  inputs:
-    nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'aa-1'
-    scanId: '7cbc716c02dc49baafb446725ef53e88'
-    sbomStandard: 'cyclonedx'
-    sbomVersion: '1.6'
-    acceptIqServerSelfSignedCertificates: true
-
-- task: SonatypeFetchSbom@0
-  inputs:
-    nexusIqService: 'Sonatype IQ Server'
-    applicationId: 'aa-1'
-    scanId: '7cbc716c02dc49baafb446725ef53e88'
-    sbomStandard: 'spdx'
-    sbomFormat: 'xml'
-    acceptIqServerSelfSignedCertificates: true
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    artifact: 'sbom.zip'
-    publishLocation: 'pipeline'
-    
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(sonatypePolicyEvaluation.sarifFile)'
     ArtifactName: 'CodeAnalysisLogs'
     publishLocation: 'Container'
   condition: succeededOrFailed()
-  
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
