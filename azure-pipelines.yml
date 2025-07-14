@@ -10,6 +10,12 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
 - task: Maven@4
   inputs:
     azureSubscription: 'Sonatype Azure(48a33158-a8cc-4938-84fd-e661939ed499)'
