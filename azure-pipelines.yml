@@ -20,6 +20,7 @@ steps:
     jdkSourceOption: 'PreInstalled'
 
 - task: NexusIqPipelineTask@0
+  name: sonatypePolicyEvaluation
   inputs:
     nexusIqService: 'Sonatype IQ Server'
     applicationId: 'aa-1'
@@ -38,6 +39,7 @@ steps:
     jdkVersionOption: '1.17'
     jdkArchitectureOption: 'x64'
     goals: 'package'
+
 
 - task: SonatypeFetchSbom@0
   name: sonatypeFetchSbomTask
@@ -66,7 +68,7 @@ steps:
     
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(sonatypePolicyEvaluation.sarifFile)'
     ArtifactName: 'CodeAnalysisLogs'
     publishLocation: 'Container'
   condition: succeededOrFailed()
