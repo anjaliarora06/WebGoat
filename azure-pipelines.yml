@@ -14,7 +14,7 @@ steps:
   inputs:
     azureSubscription: 'Sonatype Azure(48a33158-a8cc-4938-84fd-e661939ed499)'
     mavenPomFile: 'pom.xml'
-    goals: 'package -Pdist'
+    goals: 'package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
