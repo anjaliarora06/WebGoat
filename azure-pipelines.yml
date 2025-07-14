@@ -24,6 +24,19 @@ steps:
     stage: 'Build'
     acceptIqServerSelfSignedCertificates: true
 
+- task: Maven@4
+  inputs:
+    azureSubscription: 'Sonatype Azure(48a33158-a8cc-4938-84fd-e661939ed499)'
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    testRunTitle: 'sarif-file'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '17'
+    jdkArchitectureOption: 'x64'
+    goals: 'package'
+
 - task: SonatypeFetchSbom@0
   name: sonatypeFetchSbomTask
   displayName: 'Sonatype IQ Fetch SBOM'
@@ -49,7 +62,13 @@ steps:
     artifact: 'sbom.zip'
     publishLocation: 'pipeline'
     
-
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'CodeAnalysisLogs'
+    publishLocation: 'Container'
+  condition: succeededOrFailed()
+  
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
