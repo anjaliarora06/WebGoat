@@ -12,11 +12,19 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-- task: JavaToolInstaller@1
-  inputs:
-    versionSpec: '23'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+
+- script: |
+    echo "Installing Java 23..."
+    wget https://cdn.azul.com/zulu/bin/zulu23.28.91-ca-jdk23.0.0-linux_x64.tar.gz
+    tar -xzf zulu23.28.91-ca-jdk23.0.0-linux_x64.tar.gz
+    export JAVA_HOME=$(pwd)/zulu23.28.91-ca-jdk23.0.0-linux_x64
+    export PATH=$JAVA_HOME/bin:$PATH
+
+    echo "JAVA_HOME=$JAVA_HOME"
+    java -version
+    javac -version
+  displayName: 'Install Java 23 from Zulu'
+
 - task: NexusIqPipelineTask@0
   inputs:
     nexusIqService: 'Sonatype IQ Server'
