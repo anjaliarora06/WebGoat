@@ -33,7 +33,7 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     testRunTitle: 'sarif-file'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '17'
+    jdkVersionOption: '23'
     jdkArchitectureOption: 'x64'
     goals: 'package'
 
