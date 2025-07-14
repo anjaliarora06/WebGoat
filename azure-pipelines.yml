@@ -18,18 +18,12 @@ steps:
     jdkSourceOption: 'PreInstalled'
 - task: Maven@4
   inputs:
-    azureSubscription: 'Sonatype Azure(48a33158-a8cc-4938-84fd-e661939ed499)'
     mavenPomFile: 'pom.xml'
-    goals: 'package'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.17'
-    mavenVersionOption: 'Default'
-    mavenOptions: '-Xmx3072m'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    jdkArchitectureOption: 'x64'
+    goals: 'package'
+
 
 - task: NexusIqPipelineTask@0
   name: sonatypePolicyEvaluation
