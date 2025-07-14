@@ -14,7 +14,7 @@ steps:
   displayName: 'Run a one-line script'
 - task: JavaToolInstaller@1
   inputs:
-    versionSpec: '17'
+    versionSpec: '23'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 - task: NexusIqPipelineTask@0
