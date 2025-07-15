@@ -29,7 +29,7 @@ steps:
     scanTargets: '**/target/*.jar, **/target/*.zip'
     sarifFile: 'result.sarif'
     enableReachability: true
-    reachabilityNamespaces: 'test-reachability-namespace'
+    reachabilityNamespaces: 'org.owasp.webgoat'
 
 - task: PublishBuildArtifacts@1
   inputs:
