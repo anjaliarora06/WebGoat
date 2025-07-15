@@ -28,6 +28,8 @@ steps:
     stage: 'Build'
     scanTargets: '**/target/*.jar, **/target/*.zip'
     sarifFile: 'result.sarif'
+    enableReachability: true
+    reachabilityNamespaces: 'test-reachability-namespace'
 
 - task: PublishBuildArtifacts@1
   inputs:
