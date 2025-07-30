@@ -23,13 +23,13 @@ steps:
 - task: NexusIqPipelineTask@0
   name: sonatypePolicyEvaluation
   inputs:
-    nexusIqService: 'Sonatype IQ Server'
+    nexusIqService: 'IQ server'
     applicationId: 'aa-1'
     stage: 'Build'
     scanTargets: '**/target/*.jar, **/target/*.zip'
-    sarifFile: 'result.sarif'
     enableReachability: true
     reachabilityNamespaces: 'org.owasp.webgoat'
+    sarifFile: 'result.sarif'
 
 - task: PublishBuildArtifacts@1
   inputs:
